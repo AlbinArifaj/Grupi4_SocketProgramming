@@ -23,3 +23,17 @@ server.on("listening", () => {
     console.log(`Listening on ${server.address().address} port ${server.address().port}`);
 })
 
+server.on("message",(msg,ringo)=> {
+    // const command = msg.toString("utf8");
+    const regexArray = [
+        {regex: /^\/createNewFolder\s+(.+)$/, name: 'createNewFolder'},
+        {regex: /^\/readFolder\s+(.+)$/, name: 'readFolder'},
+        {regex: /^\/removeFolder\s+(.+)$/, name: 'removeFolder'},
+        {regex: /^\/createFile\s+(.+)$/, name: 'createFile'},
+        {regex: /^\/openFile\s+(.+)$/, name: 'openFile'},
+        {regex: /^\/readFile\s+(.+)$/, name: 'readFile'}
+
+    ];
+    let matchFound = false;
+
+
