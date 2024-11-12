@@ -35,5 +35,40 @@ server.on("message",(msg,ringo)=> {
 
     ];
     let matchFound = false;
+    regexArray.forEach(({regex, name}) => {
+        const match = aesDecrypt(msg).match(regex);
+
+        if (match) {
+            matchFound = true;
+            let message = "";
+            const folderName = match[1].substring(0);
+            switch (name) {
+                case "createNewFolder":
+                    if (!fs.existsSync(folderName)) {
+                        fs.mkdirSync(folderName, {recursive: true});
+                    }
+
+                    message = new Buffer("Folder Created " + folderName);
+                    server.send(message, ringo.port, ringo.address, (err) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    })
+                    break;
+                case "readFolder":
+                    if (fs.existsSync(folderName)) {
+                        fs.readdir(folderName, (err, files) => {
+                            files.forEach(file => {
+                                server.send(file, ringo.port, ringo.address, (err) => {
+                                    if (err) {
+                                        console.log(err);
+                                    }
+                                })
+                            })
+                        })
+                    }else{
+                        console.log("Directory Doesn't Exist");
+                    }
+                    break;
 
 
