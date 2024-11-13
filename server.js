@@ -71,4 +71,56 @@ server.on("message",(msg,ringo)=> {
                     }
                     break;
 
-
+                    
+                    case "removeFolder":
+                        if (fs.existsSync(folderName)) {
+    
+                            if (folderName !== "public" && folderName !== "node_modules") {
+                                fs.rmdirSync(folderName, {recursive: true, force: true});
+                            }
+                            message = new Buffer("Folder Deleted " + folderName);
+    
+                        }else{
+                            message = new Buffer("Folder Doesn't Exist");
+    
+                        }
+                        break;
+                    case "createFile":
+                        fs.createWriteStream(folderName);
+                        message = "File Created" + folderName;
+                        break;
+    
+                    case "readFile":
+                        console.log("here "+folderName);
+                        fs.chmod(folderName,0o444,(err)=>{
+    
+                            open(folderName).then(()=>{
+    
+                            }).catch((err)=>{
+                                console.log(err);
+                            })
+    
+    
+                            if (err){
+                                console.log(err);
+                            }
+                        });
+    
+                        message = "File Opened " + folderName;
+                        break;
+                }
+    
+                server.send(message, ringo.port, ringo.address, (err) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                })
+    
+            }
+        });
+        if (!matchFound) {
+            console.log(aesDecrypt(msg.toString("hex")))
+        }
+    
+    })
+    server.bind(PORT,IP_ADDRESS);
