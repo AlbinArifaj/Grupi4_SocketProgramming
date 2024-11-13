@@ -3,19 +3,158 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        body {
+            height: 100vh;
+            display: grid;
+            font-family: Roboto;
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .inp {
+            position: relative;
+            margin: auto;
+            width: 50%;
+            margin-left: 38%;
+            max-width: 280px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .inp .label {
+            position: absolute;
+            top: -5px;
+            left: 12px;
+            font-size: 16px;
+            color: rgba(0, 0, 0, 0.5);
+            font-weight: 500;
+            transform-origin: 0 0;
+            transform: translate3d(0, 0, 0);
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+        .inp .focus-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.05);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+        .inp input {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 20%;
+
+            border: 0;
+            font-family: inherit;
+            padding: 16px 12px 0 12px;
+            height: 56px;
+            font-size: 16px;
+            font-weight: 400;
+            background: rgba(0, 0, 0, 0.02);
+            box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+            color: #000;
+            transition: all 0.15s ease;
+        }
+        .inp input:hover {
+            background: rgba(0, 0, 0, 0.04);
+            box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+        }
+        /*.inp input:not(:-moz-placeholder-shown) + .label {*/
+        /*  color: rgba(0, 0, 0, 0.5);*/
+        /*  transform: translate3d(0, -12px, 0) scale(0.75);*/
+        /*}*/
+        .inp input:not(:-ms-input-placeholder) + .label {
+            color: rgba(0, 0, 0, 0.5);
+            transform: translate3d(0, -12px, 0) scale(0.75);
+        }
+        .inp input:not(:placeholder-shown) + .label {
+            color: rgba(0, 0, 0, 0.5);
+            transform: translate3d(0, -12px, 0) scale(0.75);
+        }
+        .inp input:focus {
+            background: rgba(0, 0, 0, 0.05);
+            outline: none;
+            box-shadow: inset 0 -2px 0 #0077FF;
+        }
+        .inp input:focus + .label {
+            color: #0077FF;
+            transform: translate3d(0, -12px, 0) scale(0.75);
+        }
+        .inp input:focus + .label + .focus-bg {
+            transform: scaleX(1);
+            transition: all 0.1s ease;
+        }
+        .button-9 {
+            /*appearance:;*/
+            backface-visibility: hidden;
+            background-color: #405cf5;
+            border-radius: 6px;
+            border-width: 0;
+            box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
+            box-sizing: border-box;
+            color: #fff;
+            cursor: pointer;
+            font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
+            font-size: 100%;
+            height: 44px;
+            line-height: 1.15;
+            /*margin: 12px 0 0;*/
+            outline: none;
+            overflow: hidden;
+            padding: 0 25px;
+            position: relative;
+            text-align: center;
+            text-transform: none;
+            transform: translateZ(0);
+            transition: all .2s,box-shadow .08s ease-in;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            width: 20%;
+            top: 25%;
+            margin-left: -20%;
+        }
+
+        .button-9:disabled {
+            cursor: default;
+        }
+
+        .button-9:focus {
+            box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
+        }
+    </style>
+
+
+
 
 </head>
 <body>
 <div id="app"></div>
-<form method="post" action="http://localhost:3000/send">
+<!--    <form method="post" action="http://localhost:3000/permission">-->
 
-    <input name="message"  type="text">
-    <input type="submit">
+<!--      <input name="increasePermission" placeholder="password" type="text">-->
+<!--      <input type="submit" onclick="window.location= 'loginPageClient.html'">-->
 
+<!--    </form>-->
+<form method="post" id="myForm" action="http://localhost:3000/send">
+
+    <label for="inp" class="inp">
+        <input type="text" id="inp" name="message" placeholder="&nbsp;">
+        <span class="label">Write a Message Or Command</span>
+        <span class="focus-bg"></span>
+    </label>
+    <button type="submit" class="button-9" role="button">Write A Command Or Message</button>
 </form>
 
 
-
 </body>
-
-</html>
