@@ -34,4 +34,38 @@ app.post("/permission",(req,res)=> {
                     throw error;
                 }
             })
+        })}else{
+        res.sendFile("send_message.html",{root:"."});
+        app.post("/send", (req, res) => {
+            let message = new Buffer(req.body.message);
+
+            const regexReadFile = /^\/readFolder\s+(.+)$/
+            const match = req.body.message.match(regexReadFile);
+
+            if (match){
+                client.send(message, 0, message.length, PORT, IP_ADDRESS, function (error, bytes) {
+                    if (error) {
+                        throw error;
+                    }
+                })
+            }else{
+                console.log("You can Only Read");
+            }
+
         })
+    }
+})
+
+
+client.on("message" , (msg,rinfo)=>{
+    const command = msg.toString("utf8");
+    console.log(command);
+})
+
+
+app.listen(3000 ,(err)=>{
+    if (err){
+        console.log(err)
+    }
+    console.log("Listening on port 3000");
+});
