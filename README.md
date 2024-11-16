@@ -67,37 +67,44 @@ Ensure that Node.js is installed on your system. You can download and install it
 [Download Node.js](https://nodejs.org/)
 
 Once installed, you can verify it by checking the version in your terminal:
-
+```bash
 node -v
-
+```
 ### 2. Clone the Repository
 Clone this repository to your local machine using Git:
 
+```bash
 
 git clone https://github.com/AlbinArifaj/Grupi4_SocketProgramming
 cd Grupi4_SocketProgramming
-
+```
 ### 3. Install Dependencies
 Navigate to the project directory and install the necessary dependencies using npm:
 
 npm install
 ### 4. Set Up Environment Variables
 Create a .env file in the root of the project directory, and add the following lines:
+```bash
 
 IP_ADDRESS=your-server-ip-address
 PORT=your-port-number
 ALGORITHM=aes-256-ctr
 SECRET_KEY=your-secret-key
+```
 Make sure to replace your-server-ip-address with the IP address of your server, your-port-number with the port number you wish to use adn your-secret-key the key you want to use for encryption and decryption.
 
 ### 5. Run the Server and Client
 To start the application:
 
 Run the server:
-node server.js
-In a separate terminal, run the client:
+```bash
 
+node server.js
+```
+In a separate terminal, run the client:
+```bash
 node client.js
+```
 ## Authors
 
 - [@Albin Arifaj](https://github.com/AlbinArifaj)
