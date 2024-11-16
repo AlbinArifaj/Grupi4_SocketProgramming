@@ -29,20 +29,29 @@ app.post("/permission",(req,res)=> {
 
             let message =aesEncrypt(req.body.message);
 
-            client.send(message, 0, message.length, PORT, IP_ADDRESS, function (error, bytes) {
-                if (error) {
-                    throw error;
-                }
-            })
+
+            // if (!matchFile) {
+
+                client.send(message, 0, message.length, PORT, IP_ADDRESS, function (error, bytes) {
+                    if (error) {
+                        throw error;
+                    }
+                })
+            // }
         })}else{
         res.sendFile("send_message.html",{root:"."});
         app.post("/send", (req, res) => {
-            let message = new Buffer(req.body.message);
+            // let message = new Buffer(req.body.message);
+            let message =aesEncrypt(req.body.message);
 
-            const regexReadFile = /^\/readFolder\s+(.+)$/
-            const match = req.body.message.match(regexReadFile);
+            const regexReadFolder = /^\/readFolder\s+(.+)$/
+            const matchFolder = req.body.message.match(regexReadFolder);
 
-            if (match){
+            const regexReadFile = /^\/readFile\s+(.+)$/
+            const matchFile = req.body.message.match(regexReadFile);
+
+            if (matchFolder || matchFile){
+                // console.log(message);
                 client.send(message, 0, message.length, PORT, IP_ADDRESS, function (error, bytes) {
                     if (error) {
                         throw error;
@@ -58,6 +67,7 @@ app.post("/permission",(req,res)=> {
 
 
 client.on("message" , (msg,rinfo)=>{
+
     const command = msg.toString("utf8");
     console.log(command);
 })

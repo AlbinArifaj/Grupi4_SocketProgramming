@@ -134,9 +134,6 @@
         }
     </style>
 
-
-
-
 </head>
 <body>
 <div id="app"></div>
@@ -146,15 +143,24 @@
 <!--      <input type="submit" onclick="window.location= 'loginPageClient.html'">-->
 
 <!--    </form>-->
-<form method="post" id="myForm" action="http://localhost:3000/send">
+<form method="post" id="myForm" action="http://localhost:3000/send" onsubmit="clearInput()">
 
     <label for="inp" class="inp">
         <input type="text" id="inp" name="message" placeholder="&nbsp;">
         <span class="label">Write a Message Or Command</span>
         <span class="focus-bg"></span>
     </label>
-    <button type="submit" class="button-9" role="button">Write A Command Or Message</button>
+    <button type="submit" id="submit"  class="button-9" role="button">Write A Command Or Message</button>
 </form>
 
 
+
+<script>
+    function clearInput() {
+        // Clear the input field
+        setTimeout(() => {
+            document.getElementById('inp').value = '';
+        }, 0);    }</script>
+
 </body>
+</html>
