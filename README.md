@@ -4,14 +4,14 @@ University Of Prishtina - Faculty of Electrical and Computer Engineering/Departm
 ## Supervisor
 Second Project in Computer Network Course supervised by Dr.Sc. Mërgim H. Hoti
 
-### Description
+## Description
 This project is a secure client-server application built using Node.js. It enables a client to send encrypted commands to a server over UDP to perform various file system operations. The primary purpose of the project is to remotely manage and manipulate files and directories on the server through specific commands.
 
 The client provides a simple web interface for users to submit commands and messages, which are securely encrypted before being sent to the server. The server decrypts the commands, matches them against predefined patterns (using regular expressions), and executes the corresponding operations. These operations include creating, reading, renaming, deleting files or folders, and even writing to or opening files.
 
 In summary, the project demonstrates secure communication between a client and a server, enabling remote file system management via encrypted UDP messages.
 
-### Technologies Used
+## Technologies Used
 - Node.js: Provides the runtime and libraries for creating the client and server.
 - UDP (User Datagram Protocol): A lightweight, connectionless protocol for communication between the client and server.
 - Express.js: Used to handle HTTP endpoints for client-side interaction.
@@ -20,14 +20,14 @@ In summary, the project demonstrates secure communication between a client and a
 - fs:Allows file system operations like creating, reading, deleting, renaming files/folders.
 - open: Opens files using the default application on the host system.
 
-### Components
+## Components
 
-#### Client
+### Client
 The client in this project is a Node.js application that interacts with a web interface and communicates with the server over UDP. Its main role is to send commands to the server for various file system operations. Let's break it down:
 - Web Interface (Express): It provides a simple web interface (using Express.js) for users to submit commands. Users can input file system operations they wish to perform on the server.
 - UDP Client: The client then takes these commands, encrypts them using AES encryption, and sends them as UDP packets to the server.
 
-#### Server
+### Server
 The server is also a Node.js application that listens for UDP messages sent by the client. Once it receives a message, the server:
 
 - Decryption: It decrypts the message using AES encryption to reveal the original command.
@@ -35,7 +35,7 @@ The server is also a Node.js application that listens for UDP messages sent by t
 - File System Operations: The server performs the requested operation (e.g., create a folder, read a file) on the file system.
 - Response: The server then sends a response (e.g., success or failure message, list of files) back to the client over UDP.
 
-#### Encryption Decryption (AES)
+### Encryption Decryption (AES)
 For secure communication, both the client and server use AES encryption to encrypt and decrypt the data being transmitted.
 
 - Client-Side Encryption: Before sending any data to the server, the client encrypts the message using AES to ensure that it cannot be easily intercepted or tampered with.
@@ -103,5 +103,3 @@ node client.js
 - [@Albin Arifaj](https://github.com/AlbinArifaj)
 - [@Albion Ahmeti](https://github.com/AlbionAhmeti)
 - [@Alfred Palokaj](https://github.com/AlfredPalokaj)
-
-dr.sc
