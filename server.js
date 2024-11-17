@@ -8,7 +8,7 @@ import open from "open";
 
 
 const server = dgram.createSocket("udp4");
-import regex_match from "./regex_match.js";
+import restrict_access from "./restrict_access.js";
 
 const IP_ADDRESS=process.env.IP_ADDRESS;
 const PORT=process.env.PORT;
@@ -45,97 +45,100 @@ server.on("message",(msg,ringo)=> {
             matchFound = true;
             let message = "";
             const folderName = match[1].substring(0);
-            switch (name) {
-                case "createNewFolder":
+            if (restrict_access(folderName)){
+                message = new Buffer("You can't change the content of these files or read the content of these files pls try something else")
+            }else {
+                switch (name) {
+                    case "createNewFolder":
 
-                    if (!fs.existsSync(folderName)) {
-                        fs.mkdirSync(folderName, {recursive: true});
-                    }
-                    message = new Buffer("Folder Created " + folderName);
+                        if (!fs.existsSync(folderName)) {
+                            fs.mkdirSync(folderName, {recursive: true});
+                        }
+                        message = new Buffer("Folder Created " + folderName);
 
-                    break;
-                case "readFolder":
+                        break;
+                    case "readFolder":
 
-                    if (fs.existsSync(folderName)) {
-                        fs.readdir(folderName, (err, files) => {
-                            files.forEach(file => {
-                                server.send(file, ringo.port, ringo.address, (err) => {
-                                    if (err) {
-                                        console.log(err);
-                                    }
+                        if (fs.existsSync(folderName)) {
+                            fs.readdir(folderName, (err, files) => {
+                                files.forEach(file => {
+                                    server.send(file, ringo.port, ringo.address, (err) => {
+                                        if (err) {
+                                            console.log(err);
+                                        }
+                                    })
                                 })
                             })
-                        })
-                    } else {
-                        console.log("Directory Doesn't Exist");
-                    }
-                    break;
-
-                case "removeFolder":
-
-                    if (fs.existsSync(folderName)) {
-                        const isFolders = fs.lstatSync(folderName);
-                        if (isFolders.isDirectory()) {
-                            if (folderName !== "public" && folderName !== "node_modules") {
-                                fs.rmdirSync(folderName, {recursive: true, force: true});
-                            }
-                            message = new Buffer("Folder Deleted " + folderName);
                         } else {
-                            message = new Buffer(folderName + " it's not a folder");
+                            console.log("Folder Doesn't Exist");
+                        }
+                        break;
+
+                    case "removeFolder":
+
+                        if (fs.existsSync(folderName)) {
+                            const isFolders = fs.lstatSync(folderName);
+                            if (isFolders.isDirectory()) {
+                                if (folderName !== "public" && folderName !== "node_modules") {
+                                    fs.rmdirSync(folderName, {recursive: true, force: true});
+                                }
+                                message = new Buffer("Folder Deleted " + folderName);
+                            } else {
+                                message = new Buffer(folderName + " it's not a folder");
+
+                            }
+                        } else {
+                            message = new Buffer("Folder Doesn't Exist");
 
                         }
-                    } else {
-                        message = new Buffer("Folder Doesn't Exist");
+                        break;
 
-                    }
-                    break;
+                    case "createFile":
 
-                case "createFile":
+                        fs.createWriteStream(folderName);
+                        message = "File Created " + folderName;
+                        break;
 
-                    fs.createWriteStream(folderName);
-                    message = "File Created" + folderName;
-                    break;
+                    case "openFile":
 
-                case "openFile":
+                        if (fs.existsSync(folderName)) {
 
-                    if (fs.existsSync(folderName)) {
+                            open(folderName).then(() => {
+                            }).catch((err) => {
+                                console.log(err);
+                            })
+                            message = "File Opened " + folderName;
+                        }
+                        break;
 
-                        open(folderName).then(() => {
-                        }).catch((err) => {
-                            console.log(err);
-                        })
-                        message = "File Opened " + folderName;
-                    }
-                    break;
+                    case "readFile":
+                        if (fs.existsSync(folderName)) {
 
-                case "readFile":
-                    if (fs.existsSync(folderName)) {
+                            const res = fs.openSync(folderName, 'r')
+                            const buffer = Buffer.alloc(1024);
+                            fs.readSync(res, buffer, 0, buffer.length, 0)
+                            message = buffer;
+                            fs.closeSync(res)
+                        }
 
-                        const res = fs.openSync(folderName, 'r')
-                        const buffer = Buffer.alloc(1024);
-                        fs.readSync(res, buffer, 0, buffer.length, 0)
-                        message = buffer;
-                        fs.closeSync(res)
-                    }
+                        break;
 
-                    break;
-
-                case "writeFile":
-                    const [fileName, text] = folderName.split(' ', 2);
+                    case "writeFile":
+                        const [fileName, text] = folderName.split(' ', 2);
                         fs.appendFileSync(fileName, text, {encoding: "utf8", flag: "a"})
-                    break;
-                case "renameFile":
-                    const [oldName, newname] = folderName.split(' ', 2);
-                    if (fs.existsSync(oldName)) {
+                        break;
+                    case "renameFile":
+                        const [oldName, newname] = folderName.split(' ', 2);
+                        if (fs.existsSync(oldName)) {
 
-                        fs.renameSync(oldName, newname);
-                    }else{
-                        message= "Directory doesn't exist";
-                    }
-                    break;
+                            fs.renameSync(oldName, newname);
+                        } else {
+                            message = "Directory doesn't exist";
+                        }
+                        break;
 
+                }
             }
-
 
             if (message !=="") {
                 server.send(message, ringo.port, ringo.address, (err) => {
