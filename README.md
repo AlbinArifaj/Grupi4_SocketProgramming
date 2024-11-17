@@ -1,4 +1,4 @@
-# Socket Programming- Communication with Client Server Sending UDP Packets
+# Client-Server Communication Using UDP Sockets
 University Of Prishtina - Faculty of Electrical and Computer Engineering/Department of Computer and Software Engineering
 
 ## Supervisor
