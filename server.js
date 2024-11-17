@@ -33,8 +33,8 @@ server.on("message",(msg,ringo)=> {
         {regex: /^\/openFile\s+(.+)$/, name: 'openFile'},
         {regex: /^\/readFile\s+(.+)$/, name: 'readFile'},
         {regex: /^\/writeFile\s+(.+)$/, name: 'writeFile'},
-        {regex: /^\/renameFile\s+(.+)$/, name: 'renameFile'}
-
+        {regex: /^\/renameFile\s+(.+)$/, name: 'renameFile'},
+        {regex: /^\/removeFile\s+(.+)$/, name: 'removeFile'},
 
 
     ];
@@ -136,7 +136,12 @@ server.on("message",(msg,ringo)=> {
                             message = "Directory doesn't exist";
                         }
                         break;
-
+                    case "removeFile":
+                        if (fs.existsSync(folderName)) {
+                            fs.unlinkSync(folderName);
+                        }else{
+                            message=new Buffer("File doesn't exist");
+                        }
                 }
             }
 
