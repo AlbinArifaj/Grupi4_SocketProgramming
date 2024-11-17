@@ -91,7 +91,7 @@ PORT=your-port-number
 ALGORITHM=aes-256-ctr
 SECRET_KEY=your-secret-key
 ```
-Make sure to replace your-server-ip-address with the IP address of your server, your-port-number with the port number you wish to use adn your-secret-key the key you want to use for encryption and decryption.
+Make sure to replace your-server-ip-address with the IP address of your server, your-port-number with the port number you wish to use andn your-secret-key with the key you want to use for encryption and decryption.
 
 ### 5. Run the Server and Client
 To start the application:
