@@ -1,6 +1,13 @@
 # Client-Server Communication Using UDP Sockets
 University Of Prishtina - Faculty of Electrical and Computer Engineering/Department of Computer and Software Engineering
 
+## Authors
+
+- [@Albin Arifaj](https://github.com/AlbinArifaj)
+- [@Albion Ahmeti](https://github.com/AlbionAhmeti)
+- [@Alfred Palokaj](https://github.com/AlfredPalokaj)
+
+
 ## Supervisor
 Second Project in Computer Network Course supervised by Dr.Sc. Mërgim H. Hoti
 
@@ -43,7 +50,7 @@ For secure communication, both the client and server use AES encryption to encry
 The encryption ensures that the communication between the client and server is secure, protecting sensitive data (e.g., file names, contents) from being exposed in plain text during transmission.
 
 
-### Commands That You Can Run
+### Executable Commands for Client-Server Communication
 
 | Command               | Description                                                         |
 |-----------------------|---------------------------------------------------------------------|
@@ -108,8 +115,4 @@ node client.js
 ## Demo
 [Project Demo Click Here](https://drive.google.com/file/d/1vt5Mno7_WbfJsXH7ZB7ucEQ7kPXXwEJ8/view?usp=sharing)
 
-## Authors
 
-- [@Albin Arifaj](https://github.com/AlbinArifaj)
-- [@Albion Ahmeti](https://github.com/AlbionAhmeti)
-- [@Alfred Palokaj](https://github.com/AlfredPalokaj)
